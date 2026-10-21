@@ -1,0 +1,151 @@
+.goal-settings {
+  margin: 4px 0 18px;
+  padding: 13px;
+  border: 1px solid #e1e5d9;
+  border-radius: 7px;
+  background: #f3f5ed;
+}
+
+.goal-settings-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.goal-settings-head strong {
+  font-size: 11px;
+}
+
+.goal-settings-head span,
+.goal-settings > p {
+  color: #89927d;
+  font-size: 9px;
+}
+
+.goal-options {
+  display: grid;
+  gap: 7px;
+}
+
+.goal-option {
+  display: grid;
+  grid-template-columns: minmax(110px, 1fr) minmax(130px, 150px);
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border: 1px solid #e2e6dc;
+  border-radius: 5px;
+  background: #fff;
+}
+
+.goal-toggle {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  font-size: 10px;
+}
+
+.goal-toggle input {
+  margin: 0;
+  accent-color: var(--orange);
+}
+
+.goal-entry {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px;
+  color: #758166;
+  font-size: 9px;
+}
+
+.goal-entry input {
+  min-height: 34px !important;
+  margin: 0 !important;
+  padding: 6px 8px !important;
+  font-size: 11px;
+}
+
+.goal-entry input:disabled {
+  background: #f1f2ee;
+  color: #a3a99a;
+}
+
+.goal-settings > p {
+  margin-top: 9px;
+  line-height: 1.6;
+}
+
+.goal-progress {
+  display: grid;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid #ffffff14;
+}
+
+.goal-progress[hidden] {
+  display: none;
+}
+
+.goal-progress-item {
+  display: grid;
+  gap: 5px;
+}
+
+.goal-progress-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  color: #b6c0aa;
+  font-size: 9px;
+}
+
+.goal-progress-heading strong {
+  color: #fafbf4;
+  font-size: 10px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.goal-progress-track {
+  height: 5px;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #ffffff20;
+}
+
+.goal-progress-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #c5d59b;
+  transition: width .25s ease;
+}
+
+.goal-progress-item small,
+.goal-free {
+  color: #aab59d;
+  font-size: 8px;
+}
+
+.goal-free {
+  margin: 0;
+}
+
+@media (max-width: 650px) {
+  .goal-settings {
+    margin: 4px 0 12px;
+    padding: 10px;
+  }
+
+  .goal-option {
+    grid-template-columns: minmax(88px, 1fr) minmax(125px, 150px);
+  }
+
+  .goal-progress {
+    padding: 9px 0;
+  }
+}
