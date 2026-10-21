@@ -6,7 +6,7 @@
 
 - `index.html`：首頁，包含開始運動、運動紀錄、地圖與集合點。
 - `app.js`：GPS 記錄流程、地圖、紀錄與匯出（摘要 CSV、軌跡 JSON）。
-- `core.js`：距離（Haversine）、熱量（MET × 3.5 × 體重 ÷ 200 × 分鐘）與定位點過濾。
+- `core.js`：距離（Haversine）、GPS 速度分類、區段熱量（MET × 3.5 × 體重 ÷ 200 × 分鐘）與定位點過濾。
 - `review.html`、`review.js`：匯入檢視。讀取使用者自己匯出的 JSON 與 CSV，只在瀏覽器中運作。
 - `sw.js`：離線快取。資源路徑必須是相對路徑，因為網站可能部署在 `/倉庫名稱/` 子路徑下。
 - `style.css`：樣式。

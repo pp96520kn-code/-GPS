@@ -112,7 +112,7 @@
     addFact(dl, '課堂代號', r.alias || '未填寫');
     addFact(dl, '活動方式', r.mode || '未記錄');
     addFact(dl, '身高 ／ 體重 ／ 年齡', [r.height, r.weight, r.age].map((v, i) => v == null ? '—' : v + ['cm', 'kg', '歲'][i]).join(' ／ '));
-    addFact(dl, '活動強度 MET', isNum(r.met) ? String(r.met) : '未記錄');
+    addFact(dl, '平均活動強度 MET', isNum(r.met) ? String(r.met) : '未記錄');
     addFact(dl, '有效定位點', pts.length + ' 個，分為 ' + segments + ' 段（暫停或斷訊後會另起一段）');
     addFact(dl, '起點座標', first.lat.toFixed(5) + ', ' + first.lng.toFixed(5));
     addFact(dl, '終點座標', last.lat.toFixed(5) + ', ' + last.lng.toFixed(5));
@@ -122,7 +122,7 @@
       : '這次紀錄未設定集合點');
     addFact(dl, '平均速度', speed.toFixed(2) + ' km/h（距離 ÷ 運動時間）');
     addFact(dl, '熱量算式', (isNum(r.met) && isNum(r.weight))
-      ? r.met + ' × 3.5 × ' + r.weight + ' ÷ 200 × ' + (sec / 60).toFixed(1) + ' 分鐘 ＝ ' + kcal.toFixed(1) + ' kcal（估算值，非 GPS 測量）'
+      ? '平均 MET ' + r.met + ' × 3.5 × ' + r.weight + ' ÷ 200 × ' + (sec / 60).toFixed(1) + ' 分鐘 ＝ ' + kcal.toFixed(1) + ' kcal（估算值，非 GPS 測量）'
       : '未記錄');
   }
 
