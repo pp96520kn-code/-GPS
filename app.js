@@ -48,12 +48,66 @@ function cell(v){let s=String(v??'');if(/^[=+\-@\t\r]/.test(s))s="'"+s;return '"
 function exportCSV(items){if(!items.length){message('目前沒有可匯出的紀錄。');return;}const rows=[['時間 ISO','課堂代號','類型','活動','身高 cm','體重 kg','年齡','時間 sec','距離 m','總熱量 kcal','目標熱量 kcal','目標距離 km','目標時間 min','有效 GPS 點'],...items.map(r=>[r.date,r.alias,r.demo?'示範':'GPS',r.mode,r.height,r.weight,r.age,Math.round(r.seconds),r.meters.toFixed(1),r.kcal.toFixed(1),r.goals?.calories??'',r.goals?.distanceKm??'',r.goals?.durationMinutes??'',r.points.length])];download('campus-move.csv','\ufeff'+rows.map(r=>r.map(cell).join(',')).join('\r\n'),'text/csv;charset=utf-8');}
 let historyFilter='all';
 function routeThumbnail(r){const box=document.createElement('div');box.className='route-thumb';const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 100 67');svg.setAttribute('aria-label','此筆運動軌跡縮圖');const ps=r.points||[];if(ps.length>1){const xs=ps.map(p=>p.lng),ys=ps.map(p=>p.lat),minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);const scale=Math.min(76/Math.max(maxX-minX,.00001),43/Math.max(maxY-minY,.00001));const groups=new Map();for(const p of ps){const k=p.segment||0;if(!groups.has(k))groups.set(k,[]);groups.get(k).push([p.lat,p.lng]);}for(const coordinates of groups.values()){const points=MoveCore.smoothPath(coordinates).map(([lat,lng])=>`${50+(lng-(minX+maxX)/2)*scale},${33.5-(lat-(minY+maxY)/2)*scale}`);const poly=document.createElementNS(ns,'polyline');poly.setAttribute('points',points.join(' '));poly.setAttribute('fill','none');svg.append(poly);}}else{const t=document.createElementNS(ns,'text');t.setAttribute('x','50');t.setAttribute('y','38');t.setAttribute('text-anchor','middle');t.setAttribute('stroke','none');t.setAttribute('fill','#9aa987');t.setAttribute('font-size','9');t.textContent='尚無軌跡';svg.append(t);}box.append(svg);return box;}
-function renderHistory(){const root=$('records');root.replaceChildren();const actual=records.filter(r=>!r.demo);$('historyTotal').textContent=actual.length?`${actual.length} 次運動 · ${(actual.reduce((s,r)=>s+r.meters,0)/1000).toFixed(2)} km`:'尚無 GPS 運動紀錄';const shown=records.filter(r=>historyFilter==='all'||(historyFilter==='demo'?r.demo:!r.demo));if(!shown.length){root.innerHTML='<div class="empty"><div class="empty-art"><svg><use href="#i-route"/></svg></div><div><h3>從第一段路，開始累積。</h3><p>完成運動後，你的距離、時間與軌跡會留在這裡。</p></div></div>';return;}shown.forEach(r=>{const row=document.createElement('div');row.className='record';row.append(routeThumbnail(r));const info=document.createElement('div'),title=document.createElement('strong'),sub=document.createElement('small');title.textContent=`${r.demo?'示範 · ':''}${r.alias||r.mode?.split(' · ')[0]||'運動紀錄'}`;sub.textContent=new Date(r.date).toLocaleString('zh-TW',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});info.append(title,sub);row.append(info);const stats=document.createElement('div');stats.className='record-stats';for(const [value,label]of [[(r.meters/1000).toFixed(2),'公里'],[fmt(r.seconds),'運動時間']]){const item=document.createElement('span');item.textContent=value;const unit=document.createElement('small');unit.textContent=label;item.append(unit);stats.append(item);}row.append(stats);const actions=document.createElement('div');actions.className='record-actions';for(const [label,handler]of [...(!r.demo?[['繳交',()=>window.PaceSubmit?.(r)]]:[]),['摘要',()=>exportCSV([r])],['軌跡',()=>download('campus-track.json',JSON.stringify(r,null,2),'application/json')],['刪除',()=>{if(confirm('刪除此筆運動紀錄？')){records=records.filter(x=>x.id!==r.id);persist();renderHistory();}}]]){const button=document.createElement('button');button.textContent=label;button.onclick=handler;if(label==='繳交')button.dataset.cloudOnly='';actions.append(button);}row.append(actions);root.append(row);});}
+function renderHistory(){
+  const root=$('records');
+  root.replaceChildren();
+  const actual=records.filter(record=>!record.demo);
+  $('historyTotal').textContent=actual.length?`${actual.length} 次運動 · ${(actual.reduce((sum,record)=>sum+record.meters,0)/1000).toFixed(2)} km`:'尚無 GPS 運動紀錄';
+  const shown=records.filter(record=>historyFilter==='all'||(historyFilter==='demo'?record.demo:!record.demo));
+  if(!shown.length){
+    root.innerHTML='<div class="empty"><div class="empty-art"><svg><use href="#i-route"/></svg></div><div><h3>從第一段路，開始累積。</h3><p>完成運動後，你的距離、時間與軌跡會留在這裡。</p></div></div>';
+    return;
+  }
+  shown.forEach(record=>{
+    const row=document.createElement('div');
+    row.className='record';
+    row.append(routeThumbnail(record));
+    const info=document.createElement('div');
+    const title=document.createElement('strong');
+    const sub=document.createElement('small');
+    title.textContent=`${record.demo?'示範 · ':''}${record.alias||record.mode?.split(' · ')[0]||'運動紀錄'}`;
+    sub.textContent=new Date(record.date).toLocaleString('zh-TW',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
+    info.append(title,sub);
+    row.append(info);
+    const stats=document.createElement('div');
+    stats.className='record-stats';
+    for(const [value,label]of [[(record.meters/1000).toFixed(2),'公里'],[fmt(record.seconds),'運動時間']]){
+      const item=document.createElement('span');
+      item.textContent=value;
+      const unit=document.createElement('small');
+      unit.textContent=label;
+      item.append(unit);
+      stats.append(item);
+    }
+    row.append(stats);
+    const actions=document.createElement('div');
+    actions.className='record-actions';
+    const buttons=[...(!record.demo?[['繳交',()=>window.PaceSubmit?.(record)]]:[]),['摘要',()=>exportCSV([record])],['軌跡',()=>download('campus-track.json',JSON.stringify(record,null,2),'application/json')],['刪除',()=>{
+      if(confirm('刪除此筆運動紀錄？')){
+        window.ElevationProfile?.remove(record.id);
+        records=records.filter(item=>item.id!==record.id);
+        persist();
+        renderHistory();
+      }
+    }]];
+    for(const [label,handler]of buttons){
+      const button=document.createElement('button');
+      button.textContent=label;
+      button.onclick=handler;
+      if(label==='繳交')button.dataset.cloudOnly='';
+      actions.append(button);
+    }
+    const elevationPanel=window.ElevationProfile?.create(record,actions);
+    row.append(actions);
+    root.append(row);
+    if(elevationPanel)root.append(elevationPanel);
+  });
+}
 $('openSetup').onclick=()=>$('setupDialog').showModal();$('closeSetup').onclick=()=>$('setupDialog').close();$('energyInfo').onclick=()=>$('energyDialog').showModal();$('closeEnergy').onclick=()=>$('energyDialog').close();
 $('todayDate').textContent=new Date().toLocaleDateString('zh-TW',{month:'long',day:'numeric',weekday:'short'});
 GOAL_FIELDS.forEach(([toggleId,inputId])=>{const toggle=$(toggleId),input=$(inputId),sync=()=>{input.disabled=!toggle.checked;input.required=toggle.checked;};toggle.addEventListener('change',sync);sync();});
 document.querySelectorAll('[data-filter]').forEach(button=>button.onclick=()=>{historyFilter=button.dataset.filter;document.querySelectorAll('[data-filter]').forEach(b=>{b.classList.toggle('selected',b===button);b.setAttribute('aria-pressed',String(b===button));});renderHistory();});
-$('exportAll').onclick=()=>exportCSV(records);$('deleteAll').onclick=()=>{if(records.length&&confirm('永久刪除此裝置全部運動紀錄？')){records=[];persist();renderHistory();}};
+$('exportAll').onclick=()=>exportCSV(records);$('deleteAll').onclick=()=>{if(records.length&&confirm('永久刪除此裝置全部運動紀錄？')){window.ElevationProfile?.clear();records=[];persist();renderHistory();}};
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&session?.state==='running')pause('頁面已離開前景，為避免漏記與錯估已自動暫停。回到頁面後按「繼續」。');});
 window.addEventListener('beforeunload',e=>{if(session&&session.state!=='finished'){e.preventDefault();e.returnValue='';}});
 setInterval(()=>{if(session?.state==='running'&&!session.demo&&Date.now()-lastSignal>30000)pause('超過 30 秒沒有 GPS 更新，已自動暫停。請檢查定位後按繼續。');render();},1000);
