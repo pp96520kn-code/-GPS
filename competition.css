@@ -1,0 +1,351 @@
+.competition-section {
+  padding: 38px 0 32px;
+  border-bottom: 1px solid #dfe3d5;
+}
+
+.competition-period {
+  color: #777f6e;
+  font-size: 11px;
+}
+
+.competition-overview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.competition-card {
+  display: grid;
+  align-content: start;
+  gap: 9px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.competition-label {
+  color: #89927d;
+  font-size: 9px;
+  letter-spacing: .7px;
+}
+
+.competition-card label {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.competition-alias-row {
+  display: flex;
+  gap: 8px;
+}
+
+.competition-alias-row input {
+  min-width: 0;
+  min-height: 40px;
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid #dfe3d5;
+  border-radius: 5px;
+  background: #fafbf7;
+  color: var(--ink);
+}
+
+.competition-alias-row button,
+.invite-card button {
+  min-height: 40px;
+  padding: 0 15px;
+  border: 1px solid #d9dfce;
+  border-radius: 5px;
+  background: #f1f3e9;
+  color: #44513d;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.competition-alias-row button:hover,
+.invite-card button:hover {
+  background: #e7eadc;
+}
+
+.competition-card small,
+.competition-subheading > small {
+  color: #8b9084;
+  font-size: 9px;
+  line-height: 1.6;
+}
+
+.competition-code {
+  color: var(--ink);
+  font-size: 27px;
+  font-weight: 650;
+  letter-spacing: 3px;
+  font-variant-numeric: tabular-nums;
+}
+
+.invite-card button {
+  justify-self: start;
+}
+
+.competition-notice {
+  margin: 13px 0 18px;
+  padding: 11px 13px;
+  border-left: 3px solid #b49b5c;
+  background: #f1f0e7;
+  color: #696c5f;
+  font-size: 10px;
+  line-height: 1.7;
+}
+
+.competition-score {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 17px 19px;
+  border-radius: 8px;
+  background: var(--dark);
+  color: #f8f9f3;
+}
+
+.competition-score > div {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.competition-score span,
+.competition-score p {
+  color: #b5bea9;
+  font-size: 10px;
+}
+
+.competition-score strong {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.competition-score strong b {
+  font-size: 26px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.competition-subheading {
+  margin: 28px 0 12px;
+}
+
+.competition-subheading h3 {
+  margin: 5px 0 0;
+  font-size: 17px;
+  letter-spacing: -.3px;
+}
+
+.achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 11px;
+}
+
+.achievement-card {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 9px;
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #fff;
+}
+
+.achievement-card.is-complete {
+  border-color: #c7d1b7;
+  background: #f5f7ef;
+}
+
+.achievement-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.achievement-card-top > strong {
+  color: #59644c;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.achievement-difficulty {
+  padding: 3px 7px;
+  border-radius: 20px;
+  font-size: 8px;
+}
+
+.achievement-difficulty.easy {
+  background: #eef1e7;
+  color: #6e7c58;
+}
+
+.achievement-difficulty.medium {
+  background: #f3ecda;
+  color: #927a3d;
+}
+
+.achievement-difficulty.hard {
+  background: #f6e8e0;
+  color: #a55339;
+}
+
+.achievement-card h3 {
+  margin: 0;
+  font-size: 13px;
+}
+
+.achievement-card p {
+  min-height: 30px;
+  color: #858b7d;
+  font-size: 9px;
+  line-height: 1.6;
+}
+
+.achievement-track {
+  height: 5px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #e9ece3;
+}
+
+.achievement-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #9ca982;
+  transition: width .25s ease;
+}
+
+.achievement-card.is-complete .achievement-track span {
+  background: #71864e;
+}
+
+.achievement-card small {
+  color: #78806e;
+  font-size: 9px;
+  font-variant-numeric: tabular-nums;
+}
+
+.competition-leaderboard {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #fff;
+  list-style: none;
+}
+
+.leaderboard-row {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 11px;
+  min-height: 58px;
+  padding: 9px 15px;
+  border-bottom: 1px solid #eef0e9;
+}
+
+.leaderboard-row:last-child {
+  border-bottom: 0;
+}
+
+.leaderboard-row.is-me {
+  background: #f4f6ed;
+}
+
+.leaderboard-rank {
+  color: #858c78;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.leaderboard-identity {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.leaderboard-identity strong {
+  overflow: hidden;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.leaderboard-identity small {
+  color: #8b9084;
+  font-size: 8px;
+}
+
+.leaderboard-row > b {
+  color: #59644c;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.competition-message {
+  min-height: 18px;
+  margin-top: 9px;
+  color: #657158;
+  font-size: 10px;
+}
+
+@media (max-width: 850px) {
+  .achievement-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 650px) {
+  .competition-section {
+    padding-top: 27px;
+  }
+
+  .competition-overview {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+  .competition-card {
+    padding: 14px;
+  }
+
+  .competition-code {
+    font-size: 23px;
+  }
+
+  .achievement-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .achievement-card {
+    gap: 7px;
+    padding: 13px;
+  }
+
+  .achievement-card p {
+    min-height: 0;
+  }
+
+  .competition-score {
+    padding: 14px;
+  }
+
+  .competition-score > div {
+    gap: 8px;
+  }
+
+  .competition-score p {
+    text-align: right;
+  }
+}
